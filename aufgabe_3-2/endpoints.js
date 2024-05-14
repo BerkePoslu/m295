@@ -71,6 +71,13 @@ app.get("/xml", (req, res) => {
   res.sendFile(filePath);
 });
 
+app.get("/me", (req, res) => {
+  const __dirname = import.meta.dirname;
+  const filePath = path.resolve(__dirname, "me.json");
+  res.sendFile(filePath);
+});
+
+
 app.listen(port, () => {
   console.log(`Endpoints app listening on port ${port}`);
 });
