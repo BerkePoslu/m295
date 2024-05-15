@@ -230,7 +230,51 @@ app.delete("/books/:isbn", (req, res) => {
 });
 
 app.get("/lends", (req, res) => {
-  res.send(array);
+  res.send(lendArray);
+});
+
+app.get("/lends/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  console.log(id);
+  const findArray = lendArray.find((element) => element.id === id);
+  console.log(lendArray);
+  res.send(findArray);
+});
+
+app.post("/lends", (req, res) => {
+  if (!req.body) {
+    return res.status(400).send("no lend");
+  }
+
+  const lend = req.body;
+
+  console.log(req.body);
+
+  if (lend) {
+    const uuid = crypto.randomUUID();
+    const updatedlend = { id: uuid, ...lend };
+    const postArray = [...lendArray, updatedlend];
+    return res.send(postArray);
+  } else {
+    return res.sendStatus(422);
+  }
+});
+
+app.delete("/lends/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  console.log(id);
+
+  const findArray = lendArray.find((element) => element.id === id);
+  if (!findArray) {
+    return res.status(404).send("Lend not found");
+  }
+
+  const date = new Date();
+  const formattedDate = date.toISOString();
+
+  findArray.returned_at = formattedDate;
+
+  return res.send(findArray);
 });
 
 app.listen(port, () => {
