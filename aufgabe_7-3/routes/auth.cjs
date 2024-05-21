@@ -20,7 +20,6 @@ router.post("/login", async (req, res) => {
   // #swagger.tags = ["Authentication"]
   // #swagger.description = "This route logs in the user with email and password to get access to the library. If the user is already logged in, a 200 status code is returned. If the user is not logged in, a 401 status code is returned."
   const authHeader = req.headers.authorization;
-  console.log(authHeader);
 
   if (!authHeader) {
     res.setHeader("WWW-Authenticate", "Basic");
@@ -28,20 +27,14 @@ router.post("/login", async (req, res) => {
   }
 
   const [email, password] = decodeHeader(authHeader);
-  console.log(email);
-  console.log(password);
 
   const storedEmailHash = process.env.EMAIL_HASH;
   const emailMatch = await bcrypt.compare(email, storedEmailHash);
-  console.log(emailMatch);
   if (emailMatch) {
     const storedPasswordHash = process.env.PASSWORD_HASH;
-    console.log(storedPasswordHash);
     const passwordMatch = await bcrypt.compare(password, storedPasswordHash);
-    console.log(passwordMatch);
     if (passwordMatch) {
       req.session.user = email;
-      console.log(req.session.user);
       return res.status(200).redirect("/");
     } else {
       res.status(401).send("Login failed (credentials do not match)");

@@ -20,9 +20,7 @@ router.get("/lends/:id", (req, res) => {
     return res.status(401).send("Not logged in");
   }
   const id = parseInt(req.params.id);
-  console.log(id);
   const findArray = lendArray.find((element) => element.id === id);
-  console.log(lendArray);
   res.send(findArray);
 });
 
@@ -35,8 +33,6 @@ router.post("/lends", (req, res) => {
   }
 
   const lend = req.body;
-
-  console.log(req.body);
 
   if (lend) {
     const uuid = crypto.randomUUID();
@@ -57,7 +53,6 @@ router.delete("/lends/:id", (req, res) => {
     return res.status(401).send("Not logged in");
   }
   const id = parseInt(req.params.id);
-  console.log(id);
 
   const findArray = lendArray.find((element) => element.id === id);
   if (!findArray) {

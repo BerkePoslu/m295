@@ -30,7 +30,6 @@ router.get("/books/:isbn", (req, res) => {
   if (Number.isNaN(isbn)) {
     return res.status(404).send("No isbn entered!");
   }
-  console.log(isbn);
   const findArray = array.find((element) => element.isbn === isbn);
   res.send(findArray);
 });
