@@ -11,9 +11,13 @@
     "http"
   ],
   "paths": {
-    "/routes/auth/login": {
-      "get": {
-        "description": "",
+    "/login": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Login with email and password to get access to the library",
+        "description": "This route logs in the user with email and password to get access to the library. If the user is already logged in, a 200 status code is returned. If the user is not logged in, a 401 status code is returned.",
         "parameters": [
           {
             "name": "authorization",
@@ -31,9 +35,13 @@
         }
       }
     },
-    "/routes/auth/verify": {
+    "/verify": {
       "get": {
-        "description": "",
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Verify if user is logged in",
+        "description": "This route verifies if the user is logged in and returns the email of the user if logged in.",
         "responses": {
           "200": {
             "description": "OK"
@@ -44,9 +52,13 @@
         }
       }
     },
-    "/routes/auth/logout": {
+    "/logout": {
       "delete": {
-        "description": "",
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Logout the user from the server and delete the session cookie",
+        "description": "This route logs out the user from the server and deletes the session cookie.",
         "responses": {
           "200": {
             "description": "OK"
@@ -54,9 +66,13 @@
         }
       }
     },
-    "/routes/lends/lends": {
+    "/lends": {
       "get": {
-        "description": "",
+        "tags": [
+          "Lends"
+        ],
+        "summary": "Get all lends from the lend.json and return them as JSON",
+        "description": "This route returns all lends from the lend.json file. If the user is not logged in, a 401 status code is returned.",
         "responses": {
           "200": {
             "description": "OK"
@@ -67,7 +83,11 @@
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "Lends"
+        ],
+        "summary": "Create lend and add it to lend.json and return it as JSON",
+        "description": "This route creates a lend and adds it to the lend.json file. If the user is not logged in, a 401 status code is returned.",
         "responses": {
           "200": {
             "description": "OK"
@@ -81,9 +101,13 @@
         }
       }
     },
-    "/routes/lends/lends/{id}": {
+    "/lends/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Lends"
+        ],
+        "summary": "Get lend by id from lend.json and return it as JSON",
+        "description": "This route returns a lend by its id from the lend.json file. If the user is not logged in, a 401 status code is returned.",
         "parameters": [
           {
             "name": "id",
@@ -102,7 +126,11 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Lends"
+        ],
+        "summary": "Delete lend by id from lend.json and return it as JSON",
+        "description": "This route deletes a lend by its id from the lend.json file. If the user is not logged in, a 401 status code is returned.",
         "parameters": [
           {
             "name": "id",
@@ -124,19 +152,30 @@
         }
       }
     },
-    "/routes/books/": {
+    "/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Home"
+        ],
+        "summary": "Home route, returns a greeting message to the user if logged in",
+        "description": "This route returns a greeting message to the user if logged in and a 401 status code if not logged in.",
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         }
       }
     },
-    "/routes/books/books": {
+    "/books": {
       "get": {
-        "description": "",
+        "tags": [
+          "Books"
+        ],
+        "summary": "Get all books from the books.json and return them as JSON",
+        "description": "This route returns all books from the books.json file. If the user is not logged in, a 401 status code is returned.",
         "responses": {
           "200": {
             "description": "OK"
@@ -144,7 +183,11 @@
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "Books"
+        ],
+        "summary": "Create book and add it to books.json and return it as JSON",
+        "description": "This route creates a book and adds it to the books.json file. If the user is not logged in, a 401 status code is returned.",
         "parameters": [
           {
             "name": "body",
@@ -181,9 +224,13 @@
         }
       }
     },
-    "/routes/books/books/{isbn}": {
+    "/books/{isbn}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Books"
+        ],
+        "summary": "Get book by isbn from books.json and return it as JSON",
+        "description": "This route returns a book by its isbn from the books.json file. If the user is not logged in, a 401 status code is returned.",
         "parameters": [
           {
             "name": "isbn",
@@ -202,7 +249,11 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": [
+          "Books"
+        ],
+        "summary": "Update book by isbn from books.json and return it as JSON",
+        "description": "This route updates a book by its isbn from the books.json file. If the user is not logged in, a 401 status code is returned.",
         "parameters": [
           {
             "name": "isbn",
@@ -224,7 +275,11 @@
         }
       },
       "patch": {
-        "description": "",
+        "tags": [
+          "Books"
+        ],
+        "summary": "Update book by isbn from books.json and return it as JSON",
+        "description": "This route updates a book by its isbn from the books.json file. If the user is not logged in, a 401 status code is returned.",
         "parameters": [
           {
             "name": "isbn",
@@ -243,7 +298,11 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Books"
+        ],
+        "summary": "Delete book by isbn from books.json and return it as JSON",
+        "description": "This route deletes a book by its isbn from the books.json file. If the user is not logged in, a 401 status code is returned.",
         "parameters": [
           {
             "name": "isbn",

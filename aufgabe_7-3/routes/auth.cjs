@@ -16,6 +16,9 @@ function logout(req) {
 }
 
 router.post("/login", async (req, res) => {
+  // #swagger.summary = "Login with email and password to get access to the library";
+  // #swagger.tags = ["Authentication"]
+  // #swagger.description = "This route logs in the user with email and password to get access to the library. If the user is already logged in, a 200 status code is returned. If the user is not logged in, a 401 status code is returned."
   const authHeader = req.headers.authorization;
   console.log(authHeader);
 
@@ -49,6 +52,9 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/verify", (req, res) => {
+  // #swagger.summary = "Verify if user is logged in";
+  // #swagger.tags = ["Authentication"]¨
+  // #swagger.description = "This route verifies if the user is logged in and returns the email of the user if logged in."
   if (req.session.user) {
     return res.status(200).send({
       email: req.session.user,
@@ -59,6 +65,9 @@ router.get("/verify", (req, res) => {
 });
 
 router.delete("/logout", (req, res) => {
+  // #swagger.summary = "Logout the user from the server and delete the session cookie";
+  // #swagger.tags = ["Authentication"]
+  // #swagger.description = "This route logs out the user from the server and deletes the session cookie."
   logout(req);
   res.send("logged out");
 });

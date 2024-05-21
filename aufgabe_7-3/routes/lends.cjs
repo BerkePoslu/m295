@@ -3,6 +3,9 @@ const router = express.Router();
 let lendArray = require("../data/lends.json");
 
 router.get("/lends", (req, res) => {
+  // #swagger.summary = "Get all lends from the lend.json and return them as JSON";
+  // #swagger.tags = ["Lends"]
+  // #swagger.description = "This route returns all lends from the lend.json file. If the user is not logged in, a 401 status code is returned."
   if (!req.session.user) {
     return res.status(401).send("Not logged in");
   }
@@ -10,6 +13,9 @@ router.get("/lends", (req, res) => {
 });
 
 router.get("/lends/:id", (req, res) => {
+  // #swagger.summary = "Get lend by id from lend.json and return it as JSON";
+  // #swagger.tags = ["Lends"]
+  // #swagger.description = "This route returns a lend by its id from the lend.json file. If the user is not logged in, a 401 status code is returned."
   if (!req.session.user) {
     return res.status(401).send("Not logged in");
   }
@@ -21,6 +27,9 @@ router.get("/lends/:id", (req, res) => {
 });
 
 router.post("/lends", (req, res) => {
+  // #swagger.summary = "Create lend and add it to lend.json and return it as JSON";
+  // #swagger.tags = ["Lends"]
+  // #swagger.description = "This route creates a lend and adds it to the lend.json file. If the user is not logged in, a 401 status code is returned."
   if (!req.body) {
     return res.status(400).send("no lend");
   }
@@ -41,6 +50,9 @@ router.post("/lends", (req, res) => {
 });
 
 router.delete("/lends/:id", (req, res) => {
+  // #swagger.summary = "Delete lend by id from lend.json and return it as JSON";
+  // #swagger.tags = ["Lends"]
+  // #swagger.description = "This route deletes a lend by its id from the lend.json file. If the user is not logged in, a 401 status code is returned."
   if (!req.session.user) {
     return res.status(401).send("Not logged in");
   }
