@@ -1,8 +1,12 @@
-import express from "express";
+const express = require("express");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json");
+
 const app = express();
 const port = 3000;
 
 app.use(express.json());
+app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const array = [
   {
@@ -175,26 +179,40 @@ app.get("/books", (req, res) => {
 });
 
 app.get("/books/:isbn", (req, res) => {
-  const isbn = req.params.isbn;
+  const isbn = parseInt(req.params.isbn);
+
+  if (isbn === NaN) {
+    return res.status(404).send("No isbn entered!");
+  }
+  console.log(isbn);
   const findArray = array.find((element) => element.isbn === isbn);
   res.send(findArray);
 });
 
 app.post("/books", (req, res) => {
   if (!req.body) {
-    return res.status(400).send("no book");
+    return res.status(400).send("No book data provided");
   }
 
-  const book = req.body;
+  const { isbn, title, year, author } = req.body;
 
-  console.log(req.body);
-
-  if (book) {
-    const postArray = [...array, book];
-    return res.send(postArray);
-  } else {
-    return res.sendStatus(422);
+  if (!isbn || !title || !year || !author) {
+    return res.status(422).send("Incomplete book data");
   }
+
+  const allowedFields = ["isbn", "title", "year", "author"];
+  const additionalFields = Object.keys(req.body).filter(
+    (key) => !allowedFields.includes(key)
+  );
+  if (additionalFields.length > 0) {
+    return res
+      .status(422)
+      .send(`Prohibited fields found: ${additionalFields.join(", ")}`);
+  }
+
+  const postArray = [...array, { isbn, title, year, author }];
+
+  return res.send(postArray);
 });
 
 app.put("/books/:isbn", (req, res) => {
@@ -202,29 +220,41 @@ app.put("/books/:isbn", (req, res) => {
   const bookIndex = array.findIndex((element) => element.isbn === isbn);
 
   if (bookIndex !== -1) {
+    const allowedFields = ["isbn", "title", "year", "author"];
+    const additionalFields = Object.keys(req.body).filter(
+      (key) => !allowedFields.includes(key)
+    );
+    if (additionalFields.length > 0) {
+      return res
+        .status(422)
+        .send(`Prohibited fields found: ${additionalFields.join(", ")}`);
+    }
     array[bookIndex] = { ...array[bookIndex], ...req.body };
 
     res.send(array[bookIndex]);
   } else {
-    res.status(404).send("noooooooooo book");
+    res.status(404).send("No book found!");
   }
 });
 
 app.patch("/books/:isbn", (req, res) => {
-  const isbn = req.params.isbn;
-  const bookIndex = array.findIndex((element) => element.isbn === isbn);
+  try {
+    const isbn = parseInt(req.params.isbn);
+    const bookIndex = array.findIndex((element) => element.isbn === isbn);
+    if (bookIndex !== -1) {
+      array[bookIndex] = { ...array[bookIndex], ...req.body };
 
-  if (bookIndex !== -1) {
-    array[bookIndex] = { ...array[bookIndex], ...req.body };
-
-    res.send(array[bookIndex]);
-  } else {
-    res.status(404).send("noooooooooo book");
+      res.send(array[bookIndex]);
+    } else {
+      res.status(404).send("No book found!");
+    }
+  } catch {
+    return res.status(404).send("No isbn entered!");
   }
 });
 
 app.delete("/books/:isbn", (req, res) => {
-  const isbn = req.params.isbn;
+  const isbn = parseInt(req.params.isbn);
   const deleteArray = array.filter((element) => element.isbn !== isbn);
   res.send(deleteArray);
 });
