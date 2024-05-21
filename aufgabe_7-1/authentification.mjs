@@ -7,6 +7,7 @@ const app = express();
 const port = 3000;
 dotenv.config();
 
+app.use(express.json());
 app.use(
   session({
     secret: "supersecret",
@@ -48,6 +49,21 @@ app.get("/private", async (req, res) => {
   }
 });
 
+app.post("/name", async (req, res) => {
+  console.log(req.body);
+  req.session.name = req.body.name;
+  res.send("stored name in session");
+});
+
+app.get("/name", async (req, res) => {
+  res.send(req.session.name);
+});
+
+app.delete("/name", async (req, res) => {
+  req.session.destroy();
+  res.send("deleted session");
+});
+
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Auth app listening on port ${port}`);
 });
