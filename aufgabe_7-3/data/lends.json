@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "customer_id": 101,
+    "isbn": "978-3-16-148410-0",
+    "borrowed_at": "2024-05-15T10:30:00",
+    "returned_at": null
+  },
+  {
+    "id": 2,
+    "customer_id": 102,
+    "isbn": "978-3-16-148411-1",
+    "borrowed_at": "2024-05-14T09:45:00",
+    "returned_at": "2024-05-16T11:20:00"
+  },
+  {
+    "id": 3,
+    "customer_id": 103,
+    "isbn": "978-3-16-148412-2",
+    "borrowed_at": "2024-05-13T14:20:00",
+    "returned_at": null
+  },
+  {
+    "id": 4,
+    "customer_id": 104,
+    "isbn": "978-3-16-148413-3",
+    "borrowed_at": "2024-05-12T11:10:00",
+    "returned_at": null
+  },
+  {
+    "id": 5,
+    "customer_id": 105,
+    "isbn": "978-3-16-148414-4",
+    "borrowed_at": "2024-05-11T08:00:00",
+    "returned_at": "2024-05-13T13:45:00"
+  }
+]

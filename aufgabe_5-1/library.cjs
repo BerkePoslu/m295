@@ -181,7 +181,7 @@ app.get("/books", (req, res) => {
 app.get("/books/:isbn", (req, res) => {
   const isbn = parseInt(req.params.isbn);
 
-  if (isbn === NaN) {
+  if (Number.isNaN(isbn)) {
     return res.status(404).send("No isbn entered!");
   }
   console.log(isbn);

@@ -1,7 +1,7 @@
-import express, { response } from "express";
+import express from "express";
 import path from "path";
 import fetch from "node-fetch";
-import fs from "fs"
+import fs from "fs";
 const app = express();
 const port = 3000;
 
@@ -106,9 +106,7 @@ app.patch("/me", (req, res) => {
   fs.writeFile(filePath, JSON.stringify(data), () => {
     res.sendFile(filePath);
   });
-
 });
-
 
 app.get("/html", (req, res) => {
   const __dirname = import.meta.dirname;
